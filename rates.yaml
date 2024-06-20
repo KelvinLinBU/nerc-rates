@@ -26,6 +26,11 @@
     - value: "0.463"
       from: 2023-06
 
+- name: GPUA2 SU Rate
+  history:
+    - value: "0.463"
+      from: 2023-06
+
 - name: Storage GB Rate
   history:
     - value: "0.000009"
