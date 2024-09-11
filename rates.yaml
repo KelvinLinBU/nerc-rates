@@ -50,6 +50,14 @@
     - value: "True"
       from: 2024-03
 
+- name: Limit New PI Credit to MGHPCC Partners
+  history:
+  - value: "False"
+    from: 2023-06
+    until: 2024-08
+  - value: "True"
+    from: 2024-09
+
 #################################################
 # SU Definitions
 #################################################
