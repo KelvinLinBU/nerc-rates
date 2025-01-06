@@ -70,3 +70,16 @@
   history:
     - value: "4096"
       from: 2023-06
+
+#################################################
+# Invoicing Values
+#################################################
+- name: New PI Credit
+  history:
+    - value: "1000"
+      from: 2023-06
+
+- name: BU Subsidy
+  history:
+    - value: "100"
+      from: 2023-06
