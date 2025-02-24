@@ -44,6 +44,27 @@
     - value: "6.04"
       from: 2025-01
 
+- name: BM FC430 SU Rate
+  history:
+    - value: "0.75"
+      from: 2025-02
+
+- name: BM FC830 SU Rate
+  history:
+    - value: "3.97"
+      from: 2025-02
+
+- name: BM GPUA100SXM4 SU Rate
+  history:
+    - value: "8.312"
+      from: 2025-02
+
+- name: BM GPUH100 SU Rate
+  history:
+    - value: "24.16"
+      from: 2025-02
+
+
 #################################################
 # Feature Flags
 #################################################
