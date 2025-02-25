@@ -97,6 +97,87 @@
     - value: "4096"
       from: 2023-06
 
+- name: vGPUs in CPU SU
+  history:
+    - value: "0"
+      from: 2023-06
+
+- name: vCPUs in GPUA100 SU
+  history:
+    - value: "24"
+      from: 2023-06
+
+- name: RAM in GPUA100 SU
+  history:
+    - value: "75776"
+      from: 2023-06
+
+- name: vGPUs in GPUA100 SU
+  history:
+    - value: "1"
+      from: 2023-06
+
+- name: vCPUs in GPUA100SXM4 SU
+  history:
+    - value: "31"
+      from: 2023-06
+
+- name: RAM in GPUA100SXM4 SU
+  history:
+    - value: "245760"
+      from: 2023-06
+
+- name: vGPUs in GPUA100SXM4 SU
+  history:
+    - value: "1"
+      from: 2023-06
+
+- name: vCPUs in GPUV100 SU
+  history:
+    - value: "48"
+      from: 2023-06
+
+- name: RAM in GPUV100 SU
+  history:
+    - value: "196608"
+      from: 2023-06
+
+- name: vGPUs in GPUV100 SU
+  history:
+    - value: "1"
+      from: 2023-06
+
+- name: vCPUs in GPUK80 SU
+  history:
+    - value: "6"
+      from: 2023-06
+
+- name: RAM in GPUK80 SU
+  history:
+    - value: "29184"
+      from: 2023-06
+
+- name: vGPUs in GPUK80 SU
+  history:
+    - value: "1"
+      from: 2023-06
+
+- name: vCPUs in GPUH100 SU
+  history:
+    - value: "63"
+      from: 2023-06
+
+- name: RAM in GPUH100 SU
+  history:
+    - value: "385024"
+      from: 2023-06
+
+- name: vGPUs in GPUH100 SU
+  history:
+    - value: "1"
+      from: 2023-06
+
+
 #################################################
 # Invoicing Values
 #################################################
