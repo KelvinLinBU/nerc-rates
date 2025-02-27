@@ -177,6 +177,66 @@
     - value: "1"
       from: 2023-06
 
+- name: vCPUs in BM FC430 SU
+  history:
+    - value: "40"
+      from: 2023-06
+
+- name: RAM in BM FC430 SU
+  history:
+    - value: "131072"
+      from: 2023-06
+
+- name: vGPUs in BM FC430 SU
+  history:
+    - value: "0"
+      from: 2023-06
+
+- name: vCPUs in BM FC830 SU
+  history:
+    - value: "176"
+      from: 2023-06
+
+- name: RAM in BM FC830 SU
+  history:
+    - value: "2097152"
+      from: 2023-06
+
+- name: vGPUs in BM FC830 SU
+  history:
+    - value: "0"
+      from: 2023-06
+
+- name: vCPUs in BM GPUA100SXM4 SU
+  history:
+    - value: "128"
+      from: 2023-06
+
+- name: RAM in BM GPUA100SXM4 SU
+  history:
+    - value: "1048576"
+      from: 2023-06
+
+- name: vGPUs in BM GPUA100SXM4 SU
+  history:
+    - value: "4"
+      from: 2023-06
+
+- name: vCPUs in BM GPUH100 SU
+  history:
+    - value: "256"
+      from: 2023-06
+
+- name: RAM in BM GPUH100 SU
+  history:
+    - value: "1572864"
+      from: 2023-06
+
+- name: vGPUs in BM GPUH100 SU
+  history:
+    - value: "4"
+      from: 2023-06
+
 
 #################################################
 # Invoicing Values
