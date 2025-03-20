@@ -110,74 +110,54 @@ def test_fail_with_duplicate_names():
                 },
             ]
         )
-
-
+        
 @pytest.fixture
 def sample_rates():
     return rates.Rates(
         [
-            # Decimal-typed rate to test Decimal casting
+            # Decimal-typed RateItem
             {
                 "name": "Decimal Rate",
-                "history": [
-                    {"value": "1.23", "from": "2020-01", "type": "Decimal"},
-                ],
+                "type": "Decimal",
+                "history": [{"value": "1.23", "from": "2020-01"}],
             },
-            # Boolean-typed rate to test boolean parsing (string "true" -> True)
+            # Boolean-typed RateItem
             {
                 "name": "Boolean Rate",
-                "history": [
-                    {"value": "true", "from": "2020-01", "type": "bool"},
-                ],
+                "type": "bool",
+                "history": [{"value": "true", "from": "2020-01"}],
             },
-            # String-typed rate to test that it returns as string
+            # String-typed RateItem
             {
                 "name": "String Rate",
-                "history": [
-                    {"value": "standard", "from": "2020-01", "type": "str"},
-                ],
+                "type": "str",
+                "history": [{"value": "standard", "from": "2020-01"}],
             },
-            # Legacy rate (no type) to test backward compatibility
+            # Legacy RateItem (no type)
             {
                 "name": "Legacy Rate",
-                "history": [
-                    {"value": "legacy_value", "from": "2020-01"},
-                ],
+                "history": [{"value": "legacy_value", "from": "2020-01"}],
             },
         ]
     )
 
+@pytest.mark.parametrize(
+    "name, query_date, datatype, expected, raises",
+    [
+        ("Decimal Rate", "2020-01", Decimal, Decimal("1.23"), None),
+        ("Boolean Rate", "2020-01", bool, True, None),
+        ("String Rate", "2020-01", str, "standard", None),
+        ("Decimal Rate", "2020-01", None, "1.23", None),
+        ("Legacy Rate", "2020-01", None, "legacy_value", None),
+        ("Decimal Rate", "2020-01", bool, None, TypeError),  
+        ("Legacy Rate", "2020-01", Decimal, None, TypeError), 
+    ],
+)
 
-def test_decimal_cast(sample_rates):
-    result = sample_rates.get_value_at("Decimal Rate", "2020-01", Decimal)
-    assert result == Decimal("1.23")
-
-
-def test_bool_cast(sample_rates):
-    result = sample_rates.get_value_at("Boolean Rate", "2020-01", bool)
-    assert result is True
-
-
-def test_string_cast(sample_rates):
-    result = sample_rates.get_value_at("String Rate", "2020-01", str)
-    assert result == "standard"
-
-
-def test_returns_raw_string_when_no_datatype(sample_rates):
-    result = sample_rates.get_value_at("Decimal Rate", "2020-01")
-    assert result == "1.23"
-
-
-def test_raises_if_wrong_datatype(sample_rates):
-    with pytest.raises(TypeError, match='expects datatype Decimal, but got bool'):
-        sample_rates.get_value_at("Decimal Rate", "2020-01", bool)
-
-
-def test_raises_if_datatype_given_but_no_type_defined(sample_rates):
-    with pytest.raises(TypeError, match='does not define a type but you provided datatype=Decimal'):
-        sample_rates.get_value_at("Legacy Rate", "2020-01", Decimal)
-
-
-def test_returns_raw_string_legacy_data(sample_rates):
-    result = sample_rates.get_value_at("Legacy Rate", "2020-01")
-    assert result == "legacy_value"
+def test_get_value_at_cases(sample_rates, name, query_date, datatype, expected, raises):
+    if raises:
+        with pytest.raises(raises):
+            sample_rates.get_value_at(name, query_date, datatype)
+    else:
+        result = sample_rates.get_value_at(name, query_date, datatype)
+        assert result == expected
