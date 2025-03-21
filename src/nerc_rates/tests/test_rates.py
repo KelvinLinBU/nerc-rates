@@ -110,7 +110,7 @@ def test_fail_with_duplicate_names():
                 },
             ]
         )
-        
+
 @pytest.fixture
 def sample_rates():
     return rates.Rates(
@@ -149,8 +149,8 @@ def sample_rates():
         ("String Rate", "2020-01", str, "standard", None),
         ("Decimal Rate", "2020-01", None, "1.23", None),
         ("Legacy Rate", "2020-01", None, "legacy_value", None),
-        ("Decimal Rate", "2020-01", bool, None, TypeError),  
-        ("Legacy Rate", "2020-01", Decimal, None, TypeError), 
+        ("Decimal Rate", "2020-01", bool, None, TypeError),
+        ("Legacy Rate", "2020-01", Decimal, None, TypeError),
     ],
 )
 

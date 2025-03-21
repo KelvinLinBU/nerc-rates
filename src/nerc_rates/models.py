@@ -99,10 +99,10 @@ class Rates(pydantic.RootModel):
         for item in rate_item.history:
             if item.date_from <= d <= (item.date_until or d):
                 return item
-        
+
         raise ValueError(f"No value for {name} for {queried_date}.")
 
-    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type | None = None): 
+    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type | None = None):
         rate_item_obj = self.root.get(name)
         rate_value = self._get_rate_item(name, queried_date)
         if rate_item_obj.type:
@@ -116,7 +116,7 @@ class Rates(pydantic.RootModel):
                 UserWarning,
             )
                 return rate_value.value
-            if datatype != expected_type: 
+            if datatype != expected_type:
                 raise TypeError(f'Rate {name} expects datatype {expected_type.__name__},'
                                 f'but got {datatype.__name__}.')
             if expected_type is bool:
@@ -127,5 +127,5 @@ class Rates(pydantic.RootModel):
                 return str(rate_value.value)
         if datatype is not rate_item_obj.type:
             raise TypeError(f'Rate {name} does not define a type but you provided datatype={datatype.__name__}.')
-        
+
         return rate_value.value
