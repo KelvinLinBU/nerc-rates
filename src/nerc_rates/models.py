@@ -91,6 +91,8 @@ class Rates(pydantic.RootModel):
 
     def _get_rate_item(self, name: str, queried_date: datetime.date | str):
         d = parse_date(queried_date)
+        if name not in self.root:
+            raise ValueError(f"Rate item {name} does not exist.")
         for item in self.root[name].history:
             if item.date_from <= d <= (item.date_until or d):
                 return item

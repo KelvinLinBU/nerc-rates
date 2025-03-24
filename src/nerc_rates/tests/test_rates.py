@@ -164,3 +164,17 @@ def test_get_value_at_cases(sample_rates, name, query_date, datatype, expected, 
     else:
         result = sample_rates.get_value_at(name, query_date, datatype)
         assert result == expected
+
+
+def test_get_rate_item_missing_rate_item():
+    r = rates.Rates(  
+        [
+            {
+            "name": "Known Rate",
+            "type": "str",
+            "history": [{"value": "1.23", "from": "2020-01"}],
+            }
+        ]
+    )
+    with pytest.raises(ValueError, match="Rate item Unknown Rate does not exist."):
+        r._get_rate_item("Unknown Rate", "2020-01")
