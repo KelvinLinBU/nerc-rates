@@ -1,14 +1,16 @@
+from decimal import Decimal
+
 import pytest
 import pydantic
 import requests_mock
 
-from decimal import Decimal
 from nerc_rates import load_from_url, rates, models
 
 
 def test_load_from_url():
     mock_response_text = """
     - name: CPU SU Rate
+      type: str
       history:
         - value: "0.013"
           from: 2023-06
@@ -16,7 +18,7 @@ def test_load_from_url():
     with requests_mock.Mocker() as m:
         m.get(rates.DEFAULT_RATES_URL, text=mock_response_text)
         r = load_from_url()
-        assert r.get_value_at("CPU SU Rate", "2023-06") == "0.013"
+        assert r.get_value_at("CPU SU Rate", "2023-06", str) == "0.013"
 
 
 def test_invalid_date_order():
@@ -33,6 +35,7 @@ def test_invalid_date_order():
         # Two values with no end date
         {
             "name": "Test Rate",
+            "type": "str",
             "history": [
                 {"value": "1", "from": "2020-01"},
                 {"value": "2", "from": "2020-03"},
@@ -41,6 +44,7 @@ def test_invalid_date_order():
         # Second value overlaps first value at end
         {
             "name": "Test Rate",
+            "type": "str",
             "history": [
                 {"value": "1", "from": "2020-01", "until": "2020-04"},
                 {"value": "2", "from": "2020-03"},
@@ -49,6 +53,7 @@ def test_invalid_date_order():
         # Second value overlaps first value at start
         {
             "name": "Test Rate",
+            "type": "str",
             "history": [
                 {"value": "1", "from": "2020-04", "until": "2020-06"},
                 {"value": "2", "from": "2020-03", "until": "2020-05"},
@@ -57,6 +62,7 @@ def test_invalid_date_order():
         # Second value is contained by first value
         {
             "name": "Test Rate",
+            "type": "str",
             "history": [
                 {"value": "1", "from": "2020-01", "until": "2020-06"},
                 {"value": "2", "from": "2020-03", "until": "2020-05"},
@@ -74,6 +80,7 @@ def test_rates_get_value_at():
         [
             {
                 "name": "Test Rate",
+                "type": "str",
                 "history": [
                     {"value": "1", "from": "2020-01", "until": "2020-12"},
                     {"value": "2", "from": "2021-01"},
@@ -81,11 +88,11 @@ def test_rates_get_value_at():
             }
         ]
     )
-    assert r.get_value_at("Test Rate", "2020-01") == "1"
-    assert r.get_value_at("Test Rate", "2020-12") == "1"
-    assert r.get_value_at("Test Rate", "2021-01") == "2"
+    assert r.get_value_at("Test Rate", "2020-01", str) == "1"
+    assert r.get_value_at("Test Rate", "2020-12", str) == "1"
+    assert r.get_value_at("Test Rate", "2021-01", str) == "2"
     with pytest.raises(ValueError):
-        assert r.get_value_at("Test Rate", "2019-01")
+        assert r.get_value_at("Test Rate", "2019-01", str)
 
 
 def test_fail_with_duplicate_names():
@@ -96,6 +103,7 @@ def test_fail_with_duplicate_names():
             [
                 {
                     "name": "Test Rate",
+                    "type": "str",
                     "history": [
                         {"value": "1", "from": "2020-01", "until": "2020-12"},
                         {"value": "2", "from": "2021-01"},
@@ -103,6 +111,7 @@ def test_fail_with_duplicate_names():
                 },
                 {
                     "name": "Test Rate",
+                    "type": "str",
                     "history": [
                         {"value": "1", "from": "2020-01", "until": "2020-12"},
                         {"value": "2", "from": "2021-01"},
@@ -110,6 +119,7 @@ def test_fail_with_duplicate_names():
                 },
             ]
         )
+
 
 @pytest.fixture
 def sample_rates():
@@ -133,13 +143,9 @@ def sample_rates():
                 "type": "str",
                 "history": [{"value": "standard", "from": "2020-01"}],
             },
-            # Legacy RateItem (no type)
-            {
-                "name": "Legacy Rate",
-                "history": [{"value": "legacy_value", "from": "2020-01"}],
-            },
         ]
     )
+
 
 @pytest.mark.parametrize(
     "name, query_date, datatype, expected, raises",
@@ -147,12 +153,9 @@ def sample_rates():
         ("Decimal Rate", "2020-01", Decimal, Decimal("1.23"), None),
         ("Boolean Rate", "2020-01", bool, True, None),
         ("String Rate", "2020-01", str, "standard", None),
-        ("Decimal Rate", "2020-01", None, "1.23", None),
-        ("Legacy Rate", "2020-01", None, "legacy_value", None),
-        ("Decimal Rate", "2020-01", bool, None, TypeError),
-        ("Legacy Rate", "2020-01", Decimal, None, TypeError),
     ],
 )
+
 
 def test_get_value_at_cases(sample_rates, name, query_date, datatype, expected, raises):
     if raises:

@@ -6,7 +6,6 @@ from decimal import Decimal
 
 import datetime
 import pydantic
-import warnings
 
 
 class Base(pydantic.BaseModel):
@@ -48,12 +47,9 @@ class RateType(StrEnum):
     BOOL = "bool"
 
 
-RateTypeField = Annotated[str | None, pydantic.BeforeValidator(validate_rate_type)]
-
-
 class RateItem(Base):
     name: str
-    type: RateTypeField = None
+    type: RateType
     history: list[RateValue]
 
     @pydantic.model_validator(mode="after")
@@ -70,7 +66,6 @@ class RateItem(Base):
                         and (x.date_until is None or y.date_from <= x.date_until)
                     ):
                         raise ValueError("date ranges overlap")
-
         return data
 
 
@@ -87,6 +82,7 @@ RateItemDict = Annotated[
     pydantic.BeforeValidator(check_for_duplicates),
 ]
 
+
 class Rates(pydantic.RootModel):
     root: RateItemDict
 
@@ -95,37 +91,25 @@ class Rates(pydantic.RootModel):
 
     def _get_rate_item(self, name: str, queried_date: datetime.date | str):
         d = parse_date(queried_date)
-        rate_item = self.root.get(name)
-        for item in rate_item.history:
+        for item in self.root[name].history:
             if item.date_from <= d <= (item.date_until or d):
                 return item
 
         raise ValueError(f"No value for {name} for {queried_date}.")
 
-    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type | None = None):
+    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type):
         rate_item_obj = self.root.get(name)
         rate_value = self._get_rate_item(name, queried_date)
-        if rate_item_obj.type:
-            expected_type = {"str": str, "bool": bool, "Decimal": Decimal}.get(
-                rate_item_obj.type if isinstance(rate_item_obj.type, str) else rate_item_obj.type.value
+        expected_type = {"str": str, "bool": bool, "Decimal": Decimal}.get(
+            rate_item_obj.type if isinstance(rate_item_obj.type, str) else rate_item_obj.type.value
         )
-            if not datatype:
-                warnings.warn(
-                f'Rate {name} defines type {rate_item_obj.type} but no datatype was provided. '
-                ,
-                UserWarning,
-            )
-                return rate_value.value
-            if datatype != expected_type:
-                raise TypeError(f'Rate {name} expects datatype {expected_type.__name__},'
-                                f'but got {datatype.__name__}.')
-            if expected_type is bool:
-                return rate_value.value.lower() in ("true", "1")
-            if expected_type is Decimal:
-                return Decimal(rate_value.value)
-            if expected_type is str:
-                return str(rate_value.value)
-        if datatype is not rate_item_obj.type:
-            raise TypeError(f'Rate {name} does not define a type but you provided datatype={datatype.__name__}.')
-
+        if datatype != expected_type:
+            raise TypeError(f'Rate {name} expects datatype {expected_type.__name__},'
+                            f'but got {datatype.__name__}.')
+        if expected_type is bool:
+            return rate_value.value.lower() in ("true", "1")
+        if expected_type is Decimal:
+            return Decimal(rate_value.value)
+        if expected_type is str:
+            return str(rate_value.value)
         return rate_value.value
