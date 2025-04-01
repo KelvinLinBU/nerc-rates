@@ -166,11 +166,17 @@
   history:
     - value: "63"
       from: 2023-06
+      until: 2025-03
+    - value: "124"
+      from: 2025-04
 
 - name: RAM in GPUH100 SU
   history:
     - value: "385024"
       from: 2023-06
+      until: 2025-03
+    - value: "368640"
+      from: 2025-04
 
 - name: vGPUs in GPUH100 SU
   history:
