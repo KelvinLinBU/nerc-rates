@@ -2,36 +2,43 @@
 # Service Unit Rates
 #################################################
 - name: CPU SU Rate
+  type: "Decimal"
   history:
     - value: "0.013"
       from: 2023-06
 
 - name: GPUA100 SU Rate
+  type: "Decimal"
   history:
     - value: "1.803"
       from: 2023-06
 
 - name: GPUA100SXM4 SU Rate
+  type: "Decimal"
   history:
     - value: "2.078"
       from: 2023-06
 
 - name: GPUV100 SU Rate
+  type: "Decimal"
   history:
     - value: "1.214"
       from: 2023-06
 
 - name: GPUK80 SU Rate
+  type: "Decimal"
   history:
     - value: "0.463"
       from: 2023-06
 
 - name: GPUA2 SU Rate
+  type: "Decimal"
   history:
     - value: "0.463"
       from: 2023-06
 
 - name: Storage GB Rate
+  type: "Decimal"
   history:
     - value: "0.000009"
       from: 2023-06
@@ -40,26 +47,31 @@
       from: 2024-06
 
 - name: GPUH100 SU Rate
+  type: "Decimal"
   history:
     - value: "6.04"
       from: 2025-01
 
 - name: BM FC430 SU Rate
+  type: "Decimal"
   history:
     - value: "0.75"
       from: 2025-02
 
 - name: BM FC830 SU Rate
+  type: "Decimal"
   history:
     - value: "3.97"
       from: 2025-02
 
 - name: BM GPUA100SXM4 SU Rate
+  type: "Decimal"
   history:
     - value: "8.312"
       from: 2025-02
 
 - name: BM GPUH100 SU Rate
+  type: "Decimal"
   history:
     - value: "24.16"
       from: 2025-02
@@ -69,6 +81,7 @@
 # Feature Flags
 #################################################
 - name: Charge for Stopped Instances
+  type: "bool"
   history:
     - value: "False"
       from: 2023-06
@@ -77,6 +90,7 @@
       from: 2024-03
 
 - name: Limit New PI Credit to MGHPCC Partners
+  type: "bool"
   history:
   - value: "False"
     from: 2023-06
@@ -88,151 +102,181 @@
 # SU Definitions
 #################################################
 - name: vCPUs in CPU SU
+  type: "Decimal"
   history:
     - value: "1"
       from: 2023-06
 
 - name: RAM in CPU SU
+  type: "Decimal"
   history:
     - value: "4096"
       from: 2023-06
 
 - name: vGPUs in CPU SU
+  type: "Decimal"
   history:
     - value: "0"
       from: 2023-06
 
 - name: vCPUs in GPUA100 SU
+  type: "Decimal"
   history:
     - value: "24"
       from: 2023-06
 
 - name: RAM in GPUA100 SU
+  type: "Decimal"
   history:
     - value: "75776"
       from: 2023-06
 
 - name: vGPUs in GPUA100 SU
+  type: "Decimal"
   history:
     - value: "1"
       from: 2023-06
 
 - name: vCPUs in GPUA100SXM4 SU
+  type: "Decimal"
   history:
     - value: "31"
       from: 2023-06
 
 - name: RAM in GPUA100SXM4 SU
+  type: "Decimal"
   history:
     - value: "245760"
       from: 2023-06
 
 - name: vGPUs in GPUA100SXM4 SU
+  type: "Decimal"
   history:
     - value: "1"
       from: 2023-06
 
 - name: vCPUs in GPUV100 SU
+  type: "Decimal"
   history:
     - value: "48"
       from: 2023-06
 
 - name: RAM in GPUV100 SU
+  type: "Decimal"
   history:
     - value: "196608"
       from: 2023-06
 
 - name: vGPUs in GPUV100 SU
+  type: "Decimal"
   history:
     - value: "1"
       from: 2023-06
 
 - name: vCPUs in GPUK80 SU
+  type: "Decimal"
   history:
     - value: "6"
       from: 2023-06
 
 - name: RAM in GPUK80 SU
+  type: "Decimal"
   history:
     - value: "29184"
       from: 2023-06
 
 - name: vGPUs in GPUK80 SU
+  type: "Decimal"
   history:
     - value: "1"
       from: 2023-06
 
 - name: vCPUs in GPUH100 SU
+  type: "Decimal"
   history:
     - value: "63"
       from: 2023-06
 
 - name: RAM in GPUH100 SU
+  type: "Decimal"
   history:
     - value: "385024"
       from: 2023-06
 
 - name: vGPUs in GPUH100 SU
+  type: "Decimal"
   history:
     - value: "1"
       from: 2023-06
 
 - name: vCPUs in BM FC430 SU
+  type: "Decimal"
   history:
     - value: "40"
       from: 2023-06
 
 - name: RAM in BM FC430 SU
+  type: "Decimal"
   history:
     - value: "131072"
       from: 2023-06
 
 - name: vGPUs in BM FC430 SU
+  type: "Decimal"
   history:
     - value: "0"
       from: 2023-06
 
 - name: vCPUs in BM FC830 SU
+  type: "Decimal"
   history:
     - value: "176"
       from: 2023-06
 
 - name: RAM in BM FC830 SU
+  type: "Decimal"
   history:
     - value: "2097152"
       from: 2023-06
 
 - name: vGPUs in BM FC830 SU
+  type: "Decimal"
   history:
     - value: "0"
       from: 2023-06
 
 - name: vCPUs in BM GPUA100SXM4 SU
+  type: "Decimal"
   history:
     - value: "128"
       from: 2023-06
 
 - name: RAM in BM GPUA100SXM4 SU
+  type: "Decimal"
   history:
     - value: "1048576"
       from: 2023-06
 
 - name: vGPUs in BM GPUA100SXM4 SU
+  type: "Decimal"
   history:
     - value: "4"
       from: 2023-06
 
 - name: vCPUs in BM GPUH100 SU
+  type: "Decimal"
   history:
     - value: "256"
       from: 2023-06
 
 - name: RAM in BM GPUH100 SU
+  type: "Decimal"
   history:
     - value: "1572864"
       from: 2023-06
 
 - name: vGPUs in BM GPUH100 SU
+  type: "Decimal"
   history:
     - value: "4"
       from: 2023-06
@@ -242,11 +286,13 @@
 # Invoicing Values
 #################################################
 - name: New PI Credit
+  type: "Decimal"
   history:
     - value: "1000"
       from: 2023-06
 
 - name: BU Subsidy
+  type: "Decimal"
   history:
     - value: "100"
       from: 2023-06

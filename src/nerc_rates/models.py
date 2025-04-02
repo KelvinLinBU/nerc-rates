@@ -1,6 +1,8 @@
 # For python < 3.11, we need typing_extensions.Self instead of typing.Self
 from typing_extensions import Self
-from typing import Annotated
+from typing import Annotated, Any
+from enum import StrEnum
+from decimal import Decimal
 
 import datetime
 import pydantic
@@ -32,8 +34,15 @@ class RateValue(Base):
         return data
 
 
+class RateType(StrEnum):
+    STR = "str"
+    DECIMAL = "Decimal"
+    BOOL = "bool"
+
+
 class RateItem(Base):
     name: str
+    type: RateType
     history: list[RateValue]
 
     @pydantic.model_validator(mode="after")
@@ -51,6 +60,22 @@ class RateItem(Base):
                     ):
                         raise ValueError("date ranges overlap")
 
+        return data
+
+    @pydantic.model_validator(mode="after")
+    @classmethod
+    def validate_rate_type(cls, data: Self):
+        rate_type = {"str": str, "bool": bool, "Decimal": Decimal}.get(
+                    data.type)
+        for x in data.history:
+            if rate_type == Decimal:
+                try:
+                    Decimal(x.value)
+                except Exception:
+                    raise ValueError(f"{x} is not valid Decimal")
+            elif rate_type == bool:
+                if x.value.lower() not in ["true", "false"]:
+                    raise ValueError(f"Bool field must be a string of either True or False, got {x.value}")
         return data
 
 
@@ -75,10 +100,28 @@ class Rates(pydantic.RootModel):
     def __getitem__(self, item):
         return self.root[item]
 
-    def get_value_at(self, name: str, queried_date: datetime.date | str):
+    def _get_rate_item(self, name: str, queried_date: datetime.date | str):
         d = parse_date(queried_date)
         for item in self.root[name].history:
             if item.date_from <= d <= (item.date_until or d):
-                return item.value
+                return item
 
         raise ValueError(f"No value for {name} for {queried_date}.")
+
+    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type | None = None):
+        rate_item_obj = self.root.get(name)
+        rate_value = self._get_rate_item(name, queried_date)
+        if rate_item_obj.type is not None:
+            expected_type = {"str": str, "bool": bool, "Decimal": Decimal}.get(rate_item_obj.type)
+            if datatype and datatype != expected_type:
+                raise TypeError(
+                    f'Rate {name} expects datatype {expected_type.__name__}, '
+                    f'but got {datatype.__name__}.'
+                )
+            if expected_type is bool:
+                return rate_value.value.lower() in ("true", "1")
+            if expected_type is Decimal:
+                return Decimal(rate_value.value)
+            if expected_type is str:
+                return str(rate_value.value)
+        return rate_value.value
