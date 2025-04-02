@@ -65,7 +65,7 @@ class RateItem(Base):
     @pydantic.model_validator(mode="after")
     @classmethod
     def validate_rate_type(cls, data: Self):
-        rate_type = {"str": str, "bool": bool, "Decimal": Decimal}.get(
+        rate_type = {RateType.STR: str, RateType.BOOL: bool, RateType.DECIMAL: Decimal}.get(
                     data.type)
         for x in data.history:
             if rate_type == Decimal:
@@ -112,7 +112,7 @@ class Rates(pydantic.RootModel):
         rate_item_obj = self.root.get(name)
         rate_value = self._get_rate_item(name, queried_date)
         if rate_item_obj.type is not None:
-            expected_type = {"str": str, "bool": bool, "Decimal": Decimal}.get(rate_item_obj.type)
+            expected_type = {RateType.STR: str, RateType.BOOL: bool, RateType.DECIMAL: Decimal}.get(rate_item_obj.type)
             if datatype and datatype != expected_type:
                 raise TypeError(
                     f'Rate {name} expects datatype {expected_type.__name__}, '
