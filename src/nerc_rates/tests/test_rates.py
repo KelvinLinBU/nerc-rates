@@ -41,18 +41,6 @@ def test_invalid_rate_type():
         models.RateItem.model_validate(rate)
 
 
-def test_invalid_rate_type():
-    rate = {"name": "Test Rate", "type": "invalid_type",
-            "history": [
-            {"value": "1", "from": "2020-01"},
-        ],
-    }
-    with pytest.raises(
-        pydantic.ValidationError, match="Input should be 'str', 'Decimal' or 'bool'"
-    ):
-        models.RateItem.model_validate(rate)
-
-
 def test_missing_type_field():
     rate = {
         "name": "Test Rate Missing Type",
