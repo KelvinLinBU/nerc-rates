@@ -119,6 +119,12 @@
     - value: "0"
       from: 2023-06
 
+- name: GPUs in CPU SU
+  type: "Decimal"
+  history:
+    - value: "0"
+      from: 2023-06
+
 - name: vCPUs in GPUA100 SU
   type: "Decimal"
   history:
@@ -132,6 +138,12 @@
       from: 2023-06
 
 - name: vGPUs in GPUA100 SU
+  type: "Decimal"
+  history:
+    - value: "1"
+      from: 2023-06
+
+- name: GPUs in GPUA100 SU
   type: "Decimal"
   history:
     - value: "1"
@@ -155,6 +167,12 @@
     - value: "1"
       from: 2023-06
 
+- name: GPUs in GPUA100SXM4 SU
+  type: "Decimal"
+  history:
+    - value: "1"
+      from: 2023-06
+
 - name: vCPUs in GPUV100 SU
   type: "Decimal"
   history:
@@ -168,6 +186,12 @@
       from: 2023-06
 
 - name: vGPUs in GPUV100 SU
+  type: "Decimal"
+  history:
+    - value: "1"
+      from: 2023-06
+
+- name: GPUs in GPUV100 SU
   type: "Decimal"
   history:
     - value: "1"
@@ -191,6 +215,11 @@
     - value: "1"
       from: 2023-06
 
+- name: GPUs in GPUK80 SU
+  type: "Decimal"
+  history:
+    - value: "1"
+      from: 2023-06
 - name: vCPUs in GPUH100 SU
   type: "Decimal"
   history:
@@ -215,6 +244,12 @@
     - value: "1"
       from: 2023-06
 
+- name: GPUs in GPUH100 SU
+  type: "Decimal"
+  history:
+    - value: "1"
+      from: 2023-06
+
 - name: vCPUs in BM FC430 SU
   type: "Decimal"
   history:
@@ -228,6 +263,12 @@
       from: 2023-06
 
 - name: vGPUs in BM FC430 SU
+  type: "Decimal"
+  history:
+    - value: "0"
+      from: 2023-06
+
+- name: GPUs in BM FC430 SU
   type: "Decimal"
   history:
     - value: "0"
@@ -251,6 +292,12 @@
     - value: "0"
       from: 2023-06
 
+- name: GPUs in BM FC830 SU
+  type: "Decimal"
+  history:
+    - value: "0"
+      from: 2023-06
+
 - name: vCPUs in BM GPUA100SXM4 SU
   type: "Decimal"
   history:
@@ -269,6 +316,12 @@
     - value: "4"
       from: 2023-06
 
+- name: GPUs in BM GPUA100SXM4 SU
+  type: "Decimal"
+  history:
+    - value: "4"
+      from: 2023-06
+
 - name: vCPUs in BM GPUH100 SU
   type: "Decimal"
   history:
@@ -282,6 +335,12 @@
       from: 2023-06
 
 - name: vGPUs in BM GPUH100 SU
+  type: "Decimal"
+  history:
+    - value: "4"
+      from: 2023-06
+
+- name: GPUs in BM GPUH100 SU
   type: "Decimal"
   history:
     - value: "4"
