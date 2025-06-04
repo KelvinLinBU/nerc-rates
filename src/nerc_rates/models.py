@@ -108,20 +108,19 @@ class Rates(pydantic.RootModel):
 
         raise ValueError(f"No value for {name} for {queried_date}.")
 
-    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type | None = None):
+    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type):
         rate_item_obj = self.root.get(name)
         rate_value = self._get_rate_item(name, queried_date)
-        if rate_item_obj.type is not None:
-            expected_type = {RateType.STR: str, RateType.BOOL: bool, RateType.DECIMAL: Decimal}.get(rate_item_obj.type)
-            if datatype and datatype != expected_type:
-                raise TypeError(
-                    f'Rate {name} expects datatype {expected_type.__name__}, '
-                    f'but got {datatype.__name__}.'
-                )
-            if expected_type is bool:
-                return rate_value.value.lower() in ("true", "1")
-            if expected_type is Decimal:
-                return Decimal(rate_value.value)
-            if expected_type is str:
-                return str(rate_value.value)
+        expected_type = {RateType.STR: str, RateType.BOOL: bool, RateType.DECIMAL: Decimal}.get(rate_item_obj.type)
+        if datatype != expected_type:
+            raise TypeError(
+                f'Rate {name} expects datatype {expected_type.__name__}, '
+                f'but got {datatype.__name__}.'
+            )
+        if expected_type is bool:
+            return rate_value.value.lower() in ("true", "1")
+        if expected_type is Decimal:
+            return Decimal(rate_value.value)
+        if expected_type is str:
+            return str(rate_value.value)
         return rate_value.value
