@@ -51,6 +51,9 @@
   history:
     - value: "6.04"
       from: 2025-01
+      until: 2025-05
+    - value: "4"
+      from: 2025-06
 
 - name: BM FC430 SU Rate
   type: "Decimal"
@@ -75,6 +78,9 @@
   history:
     - value: "24.16"
       from: 2025-02
+      until: 2025-05
+    - value: "16"
+      from: 2025-06
 
 
 #################################################
