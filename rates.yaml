@@ -277,7 +277,7 @@
 - name: vCPUs in BM GPUH100 SU
   type: "Decimal"
   history:
-    - value: "256"
+    - value: "512"
       from: 2023-06
 
 - name: RAM in BM GPUH100 SU
