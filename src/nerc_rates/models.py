@@ -65,8 +65,11 @@ class RateItem(Base):
     @pydantic.model_validator(mode="after")
     @classmethod
     def validate_rate_type(cls, data: Self):
-        rate_type = {RateType.STR: str, RateType.BOOL: bool, RateType.DECIMAL: Decimal}.get(
-                    data.type)
+        rate_type = {
+            RateType.STR: str,
+            RateType.BOOL: bool,
+            RateType.DECIMAL: Decimal,
+        }.get(data.type)
         for x in data.history:
             if rate_type is Decimal:
                 try:
@@ -75,7 +78,9 @@ class RateItem(Base):
                     raise ValueError(f"{x} is not valid Decimal")
             elif rate_type is bool:
                 if x.value.lower() not in ["true", "false"]:
-                    raise ValueError(f"Bool field must be a string of either True or False, got {x.value}")
+                    raise ValueError(
+                        f"Bool field must be a string of either True or False, got {x.value}"
+                    )
         return data
 
 
@@ -83,7 +88,7 @@ def check_for_duplicates(items):
     data = {}
     for item in items:
         if item["name"] in data:
-            raise ValueError(f"found duplicate name \"{item['name']}\" in list")
+            raise ValueError(f'found duplicate name "{item["name"]}" in list')
         data[item["name"]] = item
     return data
 
@@ -108,14 +113,20 @@ class Rates(pydantic.RootModel):
 
         raise ValueError(f"No value for {name} for {queried_date}.")
 
-    def get_value_at(self, name: str, queried_date: datetime.date | str, datatype: type):
+    def get_value_at(
+        self, name: str, queried_date: datetime.date | str, datatype: type
+    ):
         rate_item_obj = self.root.get(name)
         rate_value = self._get_rate_item(name, queried_date)
-        expected_type = {RateType.STR: str, RateType.BOOL: bool, RateType.DECIMAL: Decimal}.get(rate_item_obj.type)
+        expected_type = {
+            RateType.STR: str,
+            RateType.BOOL: bool,
+            RateType.DECIMAL: Decimal,
+        }.get(rate_item_obj.type)
         if datatype != expected_type:
             raise TypeError(
-                f'Rate {name} expects datatype {expected_type.__name__}, '
-                f'but got {datatype.__name__}.'
+                f"Rate {name} expects datatype {expected_type.__name__}, "
+                f"but got {datatype.__name__}."
             )
         if expected_type is bool:
             return rate_value.value.lower() in ("true", "1")
