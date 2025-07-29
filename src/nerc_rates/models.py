@@ -68,12 +68,12 @@ class RateItem(Base):
         rate_type = {RateType.STR: str, RateType.BOOL: bool, RateType.DECIMAL: Decimal}.get(
                     data.type)
         for x in data.history:
-            if rate_type == Decimal:
+            if rate_type is Decimal:
                 try:
                     Decimal(x.value)
                 except Exception:
                     raise ValueError(f"{x} is not valid Decimal")
-            elif rate_type == bool:
+            elif rate_type is bool:
                 if x.value.lower() not in ["true", "false"]:
                     raise ValueError(f"Bool field must be a string of either True or False, got {x.value}")
         return data

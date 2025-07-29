@@ -119,7 +119,7 @@ def test_invalid_date_overlap(rate):
         },
     ],
 )
-def test_invalid_rate_type(rate_item_data):
+def test_invalid_rate_values(rate_item_data):
     with pytest.raises(pydantic.ValidationError, match="Bool field must be a string of either True or False|is not valid Decimal"):
         models.RateItem.model_validate(rate_item_data)
 
