@@ -46,6 +46,21 @@
     - value: "0.0000087890625"
       from: 2024-06
 
+- name: NESE Storage GB Rate
+  type: "Decimal"
+  history:
+    - value: "0.000009"
+      from: 2023-06
+      until: 2024-05
+    - value: "0.0000087890625"
+      from: 2024-06
+
+- name: IBM Spectrum Scale Storage GB Rate
+  type: "Decimal"
+  history:
+    - value: "0"
+      from: 2025-08
+
 - name: GPUH100 SU Rate
   type: "Decimal"
   history:
