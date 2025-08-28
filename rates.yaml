@@ -37,15 +37,6 @@
     - value: "0.463"
       from: 2023-06
 
-- name: Storage GB Rate
-  type: "Decimal"
-  history:
-    - value: "0.000009"
-      from: 2023-06
-      until: 2024-05
-    - value: "0.0000087890625"
-      from: 2024-06
-
 - name: NESE Storage GB Rate
   type: "Decimal"
   history:
